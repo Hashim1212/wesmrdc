@@ -1,0 +1,366 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>WESMAARRDEC Report</title>
+		<style type="text/css">
+			@page {
+				size: A4;
+				margin: 1cm;
+			}
+
+			.table,
+			td,
+			th {
+				border-bottom: 1px solid #ddd;
+				border-top: 1px solid #ddd;
+				text-align: left;
+			}
+
+			.tableinfo {
+				border: 2px solid #ddd;
+			}
+
+			.tableinfo .user {
+				border: 1px solid #ddd;
+				background-color: #008000;
+				color: whitesmoke;
+			}
+
+			.table {
+				border-collapse: collapse;
+				width: 100%;
+				border-right: 2px solid #ddd;
+				border-left: 2px solid #ddd;
+			}
+
+			.table td,
+			.table thead th {
+				border: none;
+			}
+
+			.table .user {
+				border: 1px solid #ddd;
+				background-color: #008000;
+				color: whitesmoke;
+			}
+
+			.table th,
+			td {
+				padding: 5px;
+				text-align: center;
+			}
+
+			.td {
+				word-break: inherit;
+			}
+
+			.list-group h3 {
+				font-size: 3em;
+			}
+			.list-group p {
+				font-size: 1.5rem;
+			}
+
+			.table1 {
+				width: 100%;
+				max-width: 100%;
+				margin-bottom: 5px;
+				background-color: #fff;
+				border: none;
+				text-align: center;
+			}
+
+			.table1 td {
+				border: none;
+			}
+
+			.table1 tr {
+				padding-top: -1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="card">
+				<table class="table1">
+					<tr>
+						<td colspan="3">
+							<div class="list-group">
+								<h5 style="bottom: 0; padding-bottom: -0.5rem; color: red">
+									WESTERN MINDANAO AGRICULTURE, AQUATIC AND NATURAL RESOURCES RESEARCH AND DEVELOPMENT CONSORTIUM
+								</h5>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="top: 0; padding-top: 0rem; color: red">
+							<h5>(W E S M A A R D E C)</h5>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="top: 0; padding-top: -0.35rem; color: lightskyblue">
+							<h5>Ground Floor University Library - Western Mindanao State University</h5>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" style="top: 0; padding-top: -0.25rem; color: red; padding-bottom: 0rem">
+							<h5>Normal Road, San Jose, Zamboanga City, Philippines 7000</h5>
+						</td>
+					</tr>
+					<tr>
+						<td style="color: black; background-color: lightskyblue; padding-bottom: 0rem">
+							<h5>Tel. No.: (062) 991-5087/955-8298</h5>
+						</td>
+						<td style="color: black; background-color: lightskyblue; padding-bottom: 0rem">
+							<h5>Email: odwesmaarrdec@gmail.com</h5>
+						</td>
+						<td style="color: black; background-color: lightskyblue; padding-bottom: 0rem">
+							<h5>website: www.pcarrd.dost.gov.ph</h5>
+						</td>
+					</tr>
+				</table>
+				<br />
+				<br />
+
+				<table class="table1">
+					<td>
+						<div class="list-group">
+							<h3>Report of {{data.year}}</h3>
+						</div>
+					</td>
+					<td>
+						<div class="list-group">
+							<p>Date: {% now "jS F Y h:i a" %}</p>
+						</div>
+					</td>
+				</table>
+
+				<br />
+				<br />
+				<table class="tableinfo">
+					<tr>
+						<td class="user">Total MOA/U/C</td>
+						<td class="user">Total Events</td>
+						<td class="user">Total Memorandums</td>
+						<td class="user">Total Letters</td>
+						<td class="user">Total Orders</td>
+					</tr>
+					<tr>
+						<td>{{moas.count}}</td>
+						<td>{{events.count}}</td>
+						<td>{{memos.count}}</td>
+						<td>{{letters.count}}</td>
+						<td>{{orders.count}}</td>
+					</tr>
+				</table>
+
+				<br />
+				<br />
+				<br />
+				<br />
+				<table class="table1">
+					<td>
+						<div class="list-group">
+							{% if moas_now %}
+							<h3>MOA/U/C</h3>
+							{% else %}
+							<h3>NO MOA/U/C FILES IN {{data.year}}</h3>
+							{% endif %}
+						</div>
+					</td>
+				</table>
+				{% if moas_now %}
+				<table class="table">
+					<tr>
+						<td class="user" colspan="4">MOA/U/C Files</td>
+					</tr>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Title</th>
+							<th>Type</th>
+							<th>Approved Date</th>
+						</tr>
+					</thead>
+					<tbody class="body">
+						{% for moa in moas_now %}
+						<tr>
+							<td>{{ moa.moau_no }}</td>
+							<td>{{ moa.moau_title }}</td>
+							<td>{{ moa.moau_type }}</td>
+							<td>{{ moa.moau_approve_date }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+
+				<br />
+				<br />
+
+				<table class="table1">
+					<td>
+						<div class="list-group">
+							{% if events_now %}
+							<h3>EVENTS</h3>
+							{% else %}
+							<h3>NO EVENT FILES IN {{data.year}}</h3>
+							{% endif %}
+						</div>
+					</td>
+				</table>
+				{% if events_now %}
+				<table class="table">
+					<tr>
+						<td class="user" colspan="5">Events Files</td>
+					</tr>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Agenda</th>
+							<th>Date</th>
+							<th>Venue</th>
+						</tr>
+					</thead>
+					<tbody class="body">
+						{% for event in events_now %}
+						<tr>
+							<td>{{ event.id }}</td>
+							<td>{{ event.event_name }}</td>
+							<td>{{ event.event_agenda }}</td>
+							<td>{{ event.event_date }}</td>
+							<td>{{ event.event_venue }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+
+				<br />
+				<br />
+				<table class="table1">
+					<td>
+						<div class="list-group">
+							{% if memos_now %}
+							<h3>MEMORANDUMS</h3>
+							{% else %}
+							<h3>NO MEMO FILES IN {{data.year}}</h3>
+							{% endif %}
+						</div>
+					</td>
+				</table>
+
+				{% if memos_now %}
+				<table class="table">
+					<tr>
+						<td class="user" colspan="4">Memos Files</td>
+					</tr>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Subject</th>
+							<th>Approved By</th>
+							<th>Memo Date</th>
+						</tr>
+					</thead>
+					<tbody class="body">
+						{% for memo in memos_now %}
+						<tr>
+							<td>{{ memo.memo_no }}</td>
+							<td>{{ memo.memo_subject }}</td>
+							<td>{{ memo.memo_approved_by }}</td>
+							<td>{{ memo.memo_date }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+
+				<br />
+				<br />
+				<table class="table1">
+					<td>
+						<div class="list-group">
+							{% if letters_now %}
+							<h3>LETTERS</h3>
+							{% else %}
+							<h3>NO LETTER FILES IN {{data.year}}</h3>
+							{% endif %}
+						</div>
+					</td>
+				</table>
+				{% if letters_now %}
+				<table class="table">
+					<tr>
+						<td class="user" colspan="5">Letters Files</td>
+					</tr>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Subject</th>
+							<th>To</th>
+							<th>From</th>
+							<th>Approved By</th>
+						</tr>
+					</thead>
+					<tbody class="body">
+						{% for letter in letters_now %}
+						<tr>
+							<td>{{ letter.letter_no }}</td>
+							<td>{{ letter.letter_subject }}</td>
+							<td>{{ letter.letter_to }}</td>
+							<td>{{ letter.letter_from }}</td>
+							<td>{{ letter.letter_approved_by }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+
+				<br />
+				<br />
+				<table class="table1">
+					<td>
+						<div class="list-group">
+							{% if orders_now %}
+							<h3>ORDERS</h3>
+							{% else %}
+							<h3>NO ORDER FILES IN {{data.year}}</h3>
+							{% endif %}
+						</div>
+					</td>
+				</table>
+				{% if orders_now %}
+				<table class="table">
+					<tr>
+						<td class="user" colspan="5">Orders Files</td>
+					</tr>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Subject</th>
+							<th>For</th>
+							<th>Signed By</th>
+							<th>Date</th>
+						</tr>
+					</thead>
+					<tbody class="body">
+						{% for order in orders_now %}
+						<tr>
+							<td>{{ order.so_no }}</td>
+							<td>{{ order.so_subject }}</td>
+							<td>{{ order.so_for }}</td>
+							<td>{{ order.so_signedby }}</td>
+							<td>{{ order.so_date }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
+			</div>
+		</div>
+	</body>
+</html>
